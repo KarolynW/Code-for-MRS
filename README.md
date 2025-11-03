@@ -1,10 +1,10 @@
 # Code-for-MRS Example Scripts
 
-This repository contains four small Python programs that demonstrate how market
-researchers can interact with different AI services.  Each script has been
-heavily commented so that you can read it top-to-bottom and understand the full
-process.  The sections below provide a quick overview plus step-by-step
-instructions for running everything in [Visual Studio Code](https://code.visualstudio.com/).
+This repository contains six small Python programs that demonstrate how market
+researchers can interact with different AI services and datasets.
+Each script has been heavily commented so that you can read it top-to-bottom and
+understand the full process.  The sections below provide a quick overview plus
+step-by-step instructions for running everything in [Visual Studio Code](https://code.visualstudio.com/).
 
 ## Prerequisites
 
@@ -67,6 +67,28 @@ The individual sections below highlight what each script covers.
 * Walks through authenticating with Azure using `DefaultAzureCredential`.
 * Starts a new agent thread, posts a user message, and prints the reply.
 * Includes placeholders for your Azure endpoint and agent ID.
+
+### 5. `5 Check FT.py` – Fine-tuning JSONL validator
+
+* Opens a `.jsonl` file and verifies Azure fine-tuning requirements.
+* Confirms UTF-8 with BOM encoding and checks each example for `system`, `user`,
+  and `assistant` messages.
+* Summarises valid examples and flags structural issues before you upload your
+  dataset.
+
+### 6. `6 GPT Thematic Analysis.py` – Simple thematic analysis tool
+
+* Loads the sample qualitative responses in `6 Example Qualitative.xlsx`.
+* Calls the OpenAI Responses API to extract concise themes for every comment.
+* Writes the enriched results to `6 Example Qualitative Themed.xlsx` with both
+  JSON and flattened theme columns so the findings are easy to review.
+
+## Sample datasets
+
+Two `.jsonl` files (`5 fine tuning.jsonl` and `5 validation data.jsonl`) provide
+ready-made examples for experimenting with Azure fine-tuning workflows.  Use
+`5 Check FT.py` to inspect your own datasets or these examples before uploading
+them to the service.
 
 ## Troubleshooting checklist
 
