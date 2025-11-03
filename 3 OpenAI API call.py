@@ -45,7 +45,7 @@ system_prompt = (
 # Now we make the API call
 try:
     response = client.responses.create(
-        model="gpt-4o-mini-2024-07-18",  # the lightweight GPT-4 model
+        model="gpt-4o-mini",  # the lightweight GPT-4 model
         input=[  # this is the actual content sent to the model
             {
                 "role": "system",        # defines that this text is an instruction, not user chat
