@@ -6,6 +6,8 @@ Each script has been heavily commented so that you can read it top-to-bottom and
 understand the full process.  The sections below provide a quick overview plus
 step-by-step instructions for running everything in [Visual Studio Code](https://code.visualstudio.com/).
 
+This README was produced by Codex.
+
 ## Prerequisites
 
 1. Install **Python 3.9 or later** from [python.org](https://www.python.org/downloads/).
