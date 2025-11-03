@@ -24,12 +24,13 @@ python -m venv .venv
 # macOS/Linux:
 source .venv/bin/activate
 
-pip install -r requirements.txt  # If you create this file for your team
+pip install -r requirements.txt
 ```
 
-> **Tip:** If you do not have a `requirements.txt` file, simply install the
-> packages noted in each script (`requests`, `openai`, `azure-ai-projects`, and
-> `azure-identity`).
+The provided `requirements.txt` installs every library used across the scripts,
+including `requests`, `openai`, `pandas`, and the Azure SDK packages.  Install
+them once at the start and you will be able to run any example without hunting
+for extra dependencies.
 
 ## Running the examples in VS Code
 

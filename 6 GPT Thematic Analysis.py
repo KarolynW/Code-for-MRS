@@ -22,6 +22,7 @@ import os
 import sys
 import json
 import time
+
 import pandas as pd
 from openai import OpenAI
 
@@ -39,9 +40,11 @@ C_CYAN = "\033[96m"      # progress
 INPUT_XLSX = "6 Example Qualitative.xlsx"
 OUTPUT_XLSX = "6 Example Qualitative Themed.xlsx"
 MODEL = "gpt-4o-mini-2024-07-18"
-RATE_LIMIT_DELAY = 0.3
+RATE_LIMIT_DELAY = 0.3  # short pause to avoid hitting request-per-minute limits
 # -----------------------------------------------------------------------------
 
+# Create a reusable OpenAI client.  The SDK looks for ``OPENAI_API_KEY`` in the
+# environment, keeping credentials out of the script.
 client = OpenAI()
 
 
@@ -62,6 +65,8 @@ def analyse_comment_to_themes(comment: str) -> dict:
     user_text = f"Comment:\n{comment}"
 
     # Send request to API
+    # We wrap the network call in ``try`` so beginners see a friendly message if
+    # their API key is missing or the internet connection drops mid-run.
     try:
         print(f"{C_CYAN}   ↳ Sending to model...{C_RESET}")
         resp = client.responses.create(
@@ -80,6 +85,8 @@ def analyse_comment_to_themes(comment: str) -> dict:
         return {"themes": [f"api_error: {str(e)}"]}
 
     # Try to extract and parse JSON
+    # The Responses API returns a structured object.  We carefully unwrap the
+    # nested lists and fall back to ``str(resp)`` if anything unexpected happens.
     try:
         content = resp.output[0].content[0].text
     except Exception:
@@ -107,6 +114,8 @@ def main():
     print(f"{C_BLUE}=== Crisp Thematic Analysis ==={C_RESET}")
 
     # Step 1: Load Excel file
+    # By checking for the file before opening it we can display a clear message
+    # if the user forgets to copy their own dataset into the project folder.
     if not os.path.exists(INPUT_XLSX):
         print(f"{C_RED}❌ Input file not found: {INPUT_XLSX}{C_RESET}")
         sys.exit(1)
@@ -136,6 +145,8 @@ def main():
 
         result = analyse_comment_to_themes(comment)
         themes_json_list.append(json.dumps(result, ensure_ascii=False))
+        # Pause between requests so we stay within OpenAI's rate limits and keep
+        # demos polite when run from shared networks.
         time.sleep(RATE_LIMIT_DELAY)
 
     # Step 3: Add themes back to DataFrame
@@ -147,6 +158,8 @@ def main():
             return "; ".join(data.get("themes", []))
         except Exception:
             return ""
+    # ``apply`` lets us create a human-readable column alongside the raw JSON so
+    # the output spreadsheet is easy to skim in stakeholder presentations.
     df["Themes (flat)"] = df["Themes (JSON)"].apply(flatten_themes)
 
     # Step 4: Save results
