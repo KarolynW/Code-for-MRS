@@ -1,19 +1,38 @@
-"""
-Recipe Generator using OpenAI Responses API
--------------------------------------------
+"""Guided recipe generator using the OpenAI Responses API.
 
-This teaching example:
-• Demonstrates how to send and receive data through an API.
-• Explains each part of the OpenAI Responses API call.
-• Builds a system message dynamically using user input.
-• Shows how to parse and display a text result.
+This file intentionally walks through every step of a slightly larger API
+workflow.  It asks for a list of ingredients and a cuisine style, builds a
+prompt, sends it to OpenAI, and prints the resulting recipe.
 
-Setup:
-1) pip install openai
-2) Set your OPENAI_API_KEY as an environment variable before running.
+Why it is useful for market researchers
+---------------------------------------
+* Shows how to collect input from a stakeholder (the ingredient and cuisine
+  prompts).
+* Demonstrates where to customise instructions for tone, structure, or brand
+  voice.
+* Highlights how to guard against common API mistakes with error handling.
 
-Run:
-python recipe_demo.py
+Preparing your environment
+--------------------------
+1. Install Python 3.9 or later and the OpenAI package: ``pip install openai``.
+2. Store your OpenAI API key in an environment variable named
+   ``OPENAI_API_KEY`` (see the instructions in ``2 OpenAI Basic Call.py``).
+
+Running the script in VS Code
+-----------------------------
+1. Open the repository folder in VS Code and select ``3 OpenAI API call.py``.
+2. Open the built-in terminal (``Ctrl+` `` or ``Cmd+` `` on macOS) if you want
+   to see print statements as they run.
+3. Choose **Run > Run Without Debugging** or press ``Ctrl+F5`` (``Cmd+F5``).
+4. When prompted, type your ingredients and cuisine style directly into the
+   terminal panel that appears at the bottom of VS Code.
+
+What to explore next
+--------------------
+* Try adjusting ``temperature`` or ``max_output_tokens`` to see how it affects
+  creativity and length.
+* Modify the ``system_prompt`` string to enforce a specific tone of voice or
+  output format.
 """
 
 from openai import OpenAI
@@ -34,7 +53,8 @@ if not style:
     print("No style entered. Exiting.")
     sys.exit(0)
 
-# Build the system message dynamically
+# Build the system message dynamically.
+# This string forms the clear instructions the model will follow.
 system_prompt = (
     "You must provide a recipe based on the style of food and the ingredients provided by the user. "
     "Include a descriptive title, an ingredients list with quantities, and clear cooking steps.\n\n"
@@ -62,7 +82,7 @@ try:
         },
         reasoning={},                  # optional: used by reasoning models
         tools=[],                      # none needed for this demo
-        temperature=0.7,               # controls creativity
+        temperature=0.7,               # controls creativity (0 = factual, 1 = creative)
         max_output_tokens=800,         # roughly limits output length
         top_p=1,
         store=False,                   # don't store this response in project history
@@ -91,6 +111,11 @@ What this demonstrates:
 • The 'input' array describes what information is sent.
 • The 'output' in the response contains the generated text.
 • JSON data moves between systems in a predictable structure.
+
+How to adapt for your own projects:
+• Replace the prompt-building section with language suited to your brief.
+• Collect inputs from a CSV or survey export instead of manual typing.
+• Save the `recipe` variable to a file (e.g., CSV or Excel) for reporting.
 
 Common API errors:
 • 401/403 – authentication issue (check your API key)
