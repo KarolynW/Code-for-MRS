@@ -32,22 +32,27 @@ from openai import OpenAI
 
 # Create an API client.  The library looks up the API key from the
 # environment variable mentioned above, so no key needs to be written
-# in your code.
+# in your code.  If the key is missing the client constructor will raise an
+# informative error message telling you what to fix.
 client = OpenAI()
 
 # ---------------------------------------------------------------
 # 1. Define the conversation we want to send to the model.
 # ---------------------------------------------------------------
+# The Responses API expects a list of "messages" that mimic a chat history.
+# A "system" message sets the behaviour of the assistant and a "user" message
+# represents what the person wants to know.  You can add additional items to
+# build multi-turn conversations if required.
 system_message = "You are a super helpful AI. Keep answers easy to read."
 user_question = "Tell me everything about Dogs"
 
 conversation = [
     {
-        "role": "system",
+        "role": "system",  # instruction for the model
         "content": [{"type": "input_text", "text": system_message}],
     },
     {
-        "role": "user",
+        "role": "user",    # actual question from the researcher
         "content": [{"type": "input_text", "text": user_question}],
     },
 ]
@@ -56,6 +61,7 @@ conversation = [
 # 2. Send the request to OpenAI.
 # ---------------------------------------------------------------
 # The fields below control how creative the response is and how long it can be.
+# The ``input`` argument receives the conversation list we assembled above.
 response = client.responses.create(
     model="gpt-4o-mini",              # choose an efficient general model
     input=conversation,               # the messages we defined above
@@ -72,10 +78,14 @@ response = client.responses.create(
 # ---------------------------------------------------------------
 # 3. Print a friendly summary for the user.
 # ---------------------------------------------------------------
+# ``response.output`` contains structured data about the model's answer.  The
+# try/except block keeps the script beginner-friendly by falling back to the
+# raw response object if the expected structure changes in a future SDK.
 try:
     answer_text = response.output[0].content[0].text
 except (AttributeError, IndexError):
-    # If the response format changes we fall back to the raw object.
+    # If the response format changes we fall back to the raw object so the user
+    # still sees what came back.
     answer_text = str(response)
 
 print("✅ OpenAI call completed successfully!\n")

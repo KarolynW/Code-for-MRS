@@ -39,22 +39,31 @@ from openai import OpenAI
 import sys
 
 # Create the API client (it automatically reads OPENAI_API_KEY from environment)
+# The constructor will raise an error if the key cannot be found, which makes it
+# easy to diagnose authentication problems before any network call is made.
 client = OpenAI()
 
 # Ask the user for some ingredients
+# ``input`` pauses the program and waits for text typed into the terminal.  We
+# ``strip`` the response to remove accidental trailing spaces so the prompt
+# looks neat.
 ingredients = input("Enter your ingredients (comma separated): ").strip()
 if not ingredients:
     print("No ingredients entered. Exiting.")
     sys.exit(0)
 
 # Ask the user for a style of food or cuisine
+# Collecting both pieces of information lets us tailor the recipe to a brief
+# similar to what a client might provide in real life.
 style = input("Enter the cuisine or style of food (e.g. Italian, Thai, vegan comfort): ").strip()
 if not style:
     print("No style entered. Exiting.")
     sys.exit(0)
 
 # Build the system message dynamically.
-# This string forms the clear instructions the model will follow.
+# This string forms the clear instructions the model will follow.  Notice how
+# we interpolate (insert) the user-provided values so the instructions contain
+# the latest context without manually rewriting the text each time.
 system_prompt = (
     "You must provide a recipe based on the style of food and the ingredients provided by the user. "
     "Include a descriptive title, an ingredients list with quantities, and clear cooking steps.\n\n"
@@ -90,10 +99,15 @@ try:
     )
 
 except Exception as e:
+    # Catching ``Exception`` keeps the script approachable; the message will
+    # explain issues such as network timeouts or invalid parameters.
     print(f"❌ API call failed: {e}")
     sys.exit(1)
 
 # Extract and display the text result
+# ``response.output`` mirrors the structure described in the SDK docs.  We use a
+# protective ``try`` so the script still prints *something* even if the format
+# changes in a later SDK release.
 try:
     recipe = response.output[0].content[0].text
 except Exception:

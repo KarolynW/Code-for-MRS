@@ -34,7 +34,9 @@ from azure.ai.agents.models import ListSortOrder
 from azure.identity import DefaultAzureCredential
 
 
-# Replace these with values from your own Azure AI Project portal.
+# Replace these with values from your own Azure AI Project portal.  Leaving the
+# placeholders here helps you see exactly which settings to copy from the Azure
+# interface before you run the script.
 AZURE_ENDPOINT = "https://kw647-5564-resource.services.ai.azure.com/api/projects/kw647-5564"
 AGENT_ID = "asst_aWOiJSGXSEJE2MnnCih3GTJZ"
 
@@ -44,17 +46,22 @@ def main() -> None:
 
     # Create a project client. DefaultAzureCredential tries several sign-in
     # methods automatically (service principal, managed identity, CLI login).
+    # This keeps the teaching example secure—no secrets are stored in code.
     project = AIProjectClient(credential=DefaultAzureCredential(), endpoint=AZURE_ENDPOINT)
 
     # Retrieve the agent definition.  Agents hold the instructions and tools
-    # configured in the Azure portal.
+    # configured in the Azure portal.  Think of this as loading a profile for
+    # the assistant you want to query.
     agent = project.agents.get_agent(AGENT_ID)
 
-    # Start a new thread to keep this conversation's history separate.
+    # Start a new thread to keep this conversation's history separate.  Each run
+    # uses a unique thread so your previous experiments do not mix together.
     thread = project.agents.threads.create()
     print(f"Created thread, ID: {thread.id}")
 
     # Post a user message.  Replace this text with your own customer feedback.
+    # The more realistic the comment, the more helpful the agent's response will
+    # be when you test different customer scenarios.
     feedback_text = (
         "I really liked the steak but the dessert was too sweet and the service was slow."
     )
@@ -64,14 +71,19 @@ def main() -> None:
         content=feedback_text,
     )
 
-    # Kick off the agent run and wait for it to finish.
+    # Kick off the agent run and wait for it to finish.  ``create_and_process``
+    # blocks until Azure has generated a response, which keeps the code simple
+    # for workshop settings.
     run = project.agents.runs.create_and_process(thread_id=thread.id, agent_id=agent.id)
 
     if run.status == "failed":
+        # When something goes wrong we print the diagnostic message returned by
+        # the service so you can adjust credentials or payloads accordingly.
         print(f"Run failed: {run.last_error}")
         return
 
     # Retrieve the messages in order so the conversation reads naturally.
+    # Azure may include both your original prompt and the agent's reply.
     messages = project.agents.messages.list(thread_id=thread.id, order=ListSortOrder.ASCENDING)
     for message in messages:
         _print_text_message(message.role, message.text_messages)
@@ -81,6 +93,8 @@ def _print_text_message(role: str, text_messages: Sequence[Any]) -> None:
     """Safely print the latest text snippet for a conversation role."""
 
     if not text_messages:
+        # Some messages may only contain non-text payloads.  We ignore those to
+        # keep the console output tidy.
         return
 
     latest = text_messages[-1].text.value
