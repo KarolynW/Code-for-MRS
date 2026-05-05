@@ -1,107 +1,215 @@
-# Code-for-MRS Example Scripts
+# Code-for-MRS — MRS Advanced AI Course
 
-This repository contains six small Python programs that demonstrate how market
-researchers can interact with different AI services and datasets.
-Each script has been heavily commented so that you can read it top-to-bottom and
-understand the full process.  The sections below provide a quick overview plus
-step-by-step instructions for running everything in [Visual Studio Code](https://code.visualstudio.com/).
+This repository contains the Python scripts used in the **MRS Advanced AI Course** — a
+professional training programme for market researchers learning to use Python and AI APIs
+for personal automation.
 
-This README was produced by Codex.
+Every script is a learning artefact.  The code is heavily commented so you can read it
+top-to-bottom and understand every decision.  Run the scripts, read the comments, and
+adapt them to your own projects.
+
+**Instructor:** Karolyn Webb
+
+---
 
 ## Prerequisites
 
 1. Install **Python 3.9 or later** from [python.org](https://www.python.org/downloads/).
 2. Install **Visual Studio Code** and the official **Python extension**.
-3. (Optional) Create a virtual environment for the repository so packages you
-   install here do not affect other projects.
+3. (Recommended) Create a virtual environment so packages installed here do not affect
+   other projects on your machine.
 
-Open a terminal in VS Code (``Ctrl+` `` or ``Cmd+` `` on macOS) and run the
-following commands the first time you set up the examples:
+Open a terminal in VS Code (`` Ctrl+` `` or `` Cmd+` `` on macOS) and run these commands
+the first time you set up the repository:
 
 ```bash
 python -m venv .venv
-# Activate the environment before installing packages
+
+# Activate the virtual environment:
 # Windows PowerShell:
 .venv\Scripts\Activate.ps1
-# macOS/Linux:
+# macOS / Linux:
 source .venv/bin/activate
 
+# Install all required packages:
 pip install -r requirements.txt
 ```
 
-The provided `requirements.txt` installs every library used across the scripts,
-including `requests`, `openai`, `pandas`, and the Azure SDK packages.  Install
-them once at the start and you will be able to run any example without hunting
-for extra dependencies.
+---
 
-## Running the examples in VS Code
+## Setting up your API keys
 
-1. Choose **File → Open Folder…** and select the cloned `Code-for-MRS` folder.
-2. In the Explorer sidebar click the script you want to run.
-3. Ensure the Python interpreter in the blue status bar points to your virtual
-   environment (or the Python version you installed).
-4. Click the green **Run Python File** button or press ``Ctrl+F5`` (``Cmd+F5`` on
-   macOS) to run without debugging.
-5. Watch the **Python Terminal** panel for prompts and output.
+Scripts 2, 3, 6, 7, 8, and 9 need an API key to call an AI service.  Keys are stored in
+a `.env` file in the repository folder — **never** pasted into the scripts themselves.
 
-The individual sections below highlight what each script covers.
+```bash
+# Copy the template:
+cp .env.example .env
 
-### 1. `1 API Call.py` – Public weather API
+# Open .env and replace the placeholder values with your real keys.
+```
 
-* Shows how to call an unauthenticated HTTP API with the `requests` library.
-* Demonstrates how query parameters change the results you receive.
-* Prints both the raw JSON data and selected fields for easy reading.
+During the course, keys will be provided for you.  To create your own:
 
-### 2. `2 OpenAI Basic Call.py` – Minimal OpenAI request
+- **OpenAI** — [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+- **Anthropic (Claude)** — [console.anthropic.com](https://console.anthropic.com)
 
-* Teaches the structure of an OpenAI Responses API call (system + user
-  messages).
-* Includes guidance on storing your `OPENAI_API_KEY` securely.
-* Extracts the text answer from the response object and prints it nicely.
+---
 
-### 3. `3 OpenAI API call.py` – Guided recipe generator
+## Running scripts in VS Code
 
-* Collects input from the console and builds a detailed system prompt.
-* Explains how to alter model parameters (`temperature`, `max_output_tokens`).
-* Contains teaching notes on adapting the pattern for your own briefs.
+1. Choose **File → Open Folder…** and select the `Code-for-MRS` folder.
+2. In the Explorer sidebar, click the script you want to run.
+3. Check that the Python interpreter in the blue status bar points to your virtual
+   environment (`.venv`).
+4. Click the green **Run Python File** button, or press `Ctrl+F5` (`Cmd+F5` on macOS).
+5. Watch the **Python Terminal** panel for output and any prompts.
 
-### 4. `4 Azure API call.py` – Azure AI Agents example
+---
 
-* Walks through authenticating with Azure using `DefaultAzureCredential`.
-* Starts a new agent thread, posts a user message, and prints the reply.
-* Includes placeholders for your Azure endpoint and agent ID.
+## The scripts
 
-### 5. `5 Check FT.py` – Fine-tuning JSONL validator
+### `1_http_api_demo.py` — Public weather API (no key needed)
 
-* Opens a `.jsonl` file and verifies Azure fine-tuning requirements.
-* Confirms UTF-8 with BOM encoding and checks each example for `system`, `user`,
-  and `assistant` messages.
-* Summarises valid examples and flags structural issues before you upload your
-  dataset.
+A gentle introduction to APIs.  Calls the free Open-Meteo weather service, shows the
+raw JSON response, and extracts the current temperature for London.  No API key or
+account required — a great first run to confirm your Python environment is working.
 
-### 6. `6 GPT Thematic Analysis.py` – Simple thematic analysis tool
+### `2_openai_basic_call.py` — Your first OpenAI call
 
-* Loads the sample qualitative responses in `6 Example Qualitative.xlsx`.
-* Calls the OpenAI Responses API to extract concise themes for every comment.
-* Writes the enriched results to `6 Example Qualitative Themed.xlsx` with both
-  JSON and flattened theme columns so the findings are easy to review.
+The smallest possible OpenAI example: one system prompt, one question, one answer.
+Compare this script with `7_claude_api_demo.py` to see how the OpenAI and Anthropic
+APIs follow the same pattern.
 
-## Sample datasets
+### `3_openai_with_system_prompt.py` — Recipe generator with user input
 
-Two `.jsonl` files (`5 fine tuning.jsonl` and `5 validation data.jsonl`) provide
-ready-made examples for experimenting with Azure fine-tuning workflows.  Use
-`5 Check FT.py` to inspect your own datasets or these examples before uploading
-them to the service.
+Collects ingredients and cuisine style from the terminal, builds a dynamic prompt, and
+returns a full recipe.  Demonstrates how to collect input, customise instructions, and
+use parameters like `temperature` to control creativity.
 
-## Troubleshooting checklist
+### `6_qualitative_theming.py` — Thematic analysis of survey verbatims
 
-* **Module not found:** Ensure you installed the required package into the
-  correct Python environment.  Check the interpreter selection in VS Code.
-* **Authentication errors:** Confirm that the relevant environment variables
-  (`OPENAI_API_KEY`, `AZURE_CLIENT_ID`, etc.) are available in the integrated
-  terminal.  You can use `echo $VARIABLE_NAME` to verify.
-* **Timeouts or connection issues:** Double-check that you are online and not
-  blocked by a corporate firewall.
+Loads open-ended survey responses from an Excel file, sends each comment to OpenAI,
+and receives structured JSON themes in return.  Writes the results to a new Excel file
+with two extra columns: the raw JSON and a readable flat version.  Shows a complete
+"load → process → export" workflow.
 
-If you get stuck, read the docstring at the top of each script—they include the
-most common setup steps and configuration tips.
+- **Input:** `6_Example_Qualitative.xlsx`
+- **Output:** `6_Example_Qualitative_Themed.xlsx`
+
+### `7_claude_api_demo.py` — Your first Claude API call
+
+The Claude equivalent of Script 2, using the same four-step structure so the two APIs
+are easy to compare.  The example task is a mini survey analysis: identify themes,
+summarise sentiment, and give one recommendation.
+
+### `8_open_text_categoriser.py` — Automated categorisation and sentiment scoring
+
+A practical automation tool.  Takes a list of open-ended survey responses and
+automatically assigns each one a category (e.g. *Product Quality*, *Pricing & Value*)
+and a sentiment (Positive / Neutral / Negative).  Supports both OpenAI and Claude —
+change one variable at the top to switch provider.  Exports results to Excel.
+
+- **Output:** `8_categorised_responses.xlsx`
+- **Depends on:** OpenAI key or Anthropic key (set `PROVIDER` at the top of the script)
+
+### `9_report_generator.py` — Executive summary report generator
+
+Loads the Excel output from Script 8, summarises the category and sentiment data, and
+asks Claude to write a polished executive summary report.  Saves the report as a
+plain-text file ready to review, edit, and share.
+
+This script demonstrates how the output of one script can feed directly into the next,
+creating an automated end-to-end research workflow.
+
+- **Input:** `8_categorised_responses.xlsx` (run Script 8 first)
+- **Output:** `9_executive_summary.txt`
+- **Depends on:** Anthropic key
+
+---
+
+## Legacy scripts (kept for reference)
+
+These two scripts were written for an earlier version of the course that used Azure AI
+Foundry.  They are not part of the current course flow but are kept in the repository
+for reference.
+
+### `4_azure_agent.py` — Azure AI Agents example
+
+Connects to an Azure AI Project and sends a piece of customer feedback to a pre-built
+agent.  Requires Azure credentials configured in `.env`.
+
+### `5_check_ft.py` — Fine-tuning JSONL validator
+
+Checks a `.jsonl` dataset file against Azure's fine-tuning requirements (UTF-8 BOM
+encoding, valid JSON structure, required message roles).  Run against
+`5_fine_tuning.jsonl` or your own dataset.
+
+---
+
+## Sample data files
+
+| File | Used by | Description |
+|---|---|---|
+| `6_Example_Qualitative.xlsx` | Script 6 | 10 sample survey responses with open-text comments |
+| `6_Example_Qualitative_Themed.xlsx` | — | Pre-generated output for reference |
+| `5_fine_tuning.jsonl` | Script 5 | 50 market research Q&A training examples |
+| `5_validation_data.jsonl` | Script 5 | 30 validation examples |
+
+---
+
+## Typical workflow
+
+For the main course exercises, run the scripts in this order:
+
+```
+1_http_api_demo.py           ← confirm Python + internet are working
+2_openai_basic_call.py       ← first OpenAI call
+3_openai_with_system_prompt.py ← collect input, build a prompt
+6_qualitative_theming.py     ← analyse Excel data with OpenAI
+7_claude_api_demo.py         ← same workflow using Claude
+8_open_text_categoriser.py   ← categorise + score survey responses
+9_report_generator.py        ← generate an executive summary report
+```
+
+---
+
+## Troubleshooting
+
+| Problem | What to check |
+|---|---|
+| `ModuleNotFoundError` | Did you activate the virtual environment before running? Check the interpreter in VS Code's status bar. |
+| `401 AuthenticationError` | Your API key is wrong or missing.  Open `.env` and verify the key is correct. |
+| `429 RateLimitError` | You have sent too many requests.  Wait 30–60 seconds and try again. |
+| Timeout or connection error | Check your internet connection.  Corporate networks sometimes block API calls — try a personal hotspot. |
+| Excel file not found | Make sure the data file is in the same folder as the script you are running. |
+
+If you get stuck, read the docstring at the top of the relevant script — it includes
+setup steps and common solutions.
+
+---
+
+## Project structure
+
+```
+Code-for-MRS/
+│
+├── 1_http_api_demo.py               ← unauthenticated HTTP API, requests library
+├── 2_openai_basic_call.py           ← first OpenAI API call
+├── 3_openai_with_system_prompt.py   ← system prompts, user input, parameters
+├── 4_azure_agent.py                 ← Azure AI Foundry (legacy — see above)
+├── 5_check_ft.py                    ← fine-tuning data validator (legacy)
+├── 5_fine_tuning.jsonl              ← 50 example fine-tuning records
+├── 5_validation_data.jsonl          ← 30 validation records
+├── 6_qualitative_theming.py         ← theme extraction from survey data
+├── 6_Example_Qualitative.xlsx       ← sample survey responses
+├── 6_Example_Qualitative_Themed.xlsx← pre-generated themed output
+├── 7_claude_api_demo.py             ← Claude equivalent of Script 2
+├── 8_open_text_categoriser.py       ← categorisation + sentiment, OpenAI or Claude
+├── 9_report_generator.py            ← executive summary report generator
+│
+├── requirements.txt                 ← all Python dependencies
+├── .env.example                     ← API key template (copy to .env)
+├── CLAUDE.md                        ← instructions for Claude Code
+└── USING_AI_CODING_AGENTS.md        ← guide to using Claude Code and Codex
+```

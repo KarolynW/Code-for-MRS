@@ -1,7 +1,9 @@
+anthropic
 azure-ai-agents
 azure-ai-projects
 azure-identity
 openai
 openpyxl
 pandas
+python-dotenv
 requests
