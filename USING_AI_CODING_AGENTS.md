@@ -9,8 +9,8 @@ A companion guide for the MRS Advanced AI Course
 
 | Tool | Made by | What it does | How we use it in the session |
 |------|---------|-------------|------------------------------|
-| **Claude Code** | Anthropic | A terminal agent that reads your project files and writes, improves, and explains code through conversation | Building scripts, improving documentation, running the Tasks in CLAUDE.md |
-| **OpenAI Codex** | OpenAI | A lightweight coding agent that runs in your terminal — fast and great for quick generation | Generating scripts, exploring alternatives, comparing with Claude Code output |
+| **Claude Code** | Anthropic | An AI coding agent built into the Claude desktop app — reads your project files and writes, improves, and explains code through conversation | Building scripts, improving documentation, running the Tasks in CLAUDE.md |
+| **OpenAI Codex** | OpenAI | An AI coding agent available at chatgpt.com/codex — fast and great for quick generation, runs in a cloud sandbox | Generating scripts, exploring alternatives, comparing with Claude Code output |
 | **Cowork** | Anthropic | Claude's desktop mode — automates file and task management through conversation, no terminal needed | Demonstrated live: how the course materials themselves were built |
 
 These three agents represent different entry points into AI-assisted coding. You don't need all three — pick the one that fits how you work.
@@ -23,10 +23,9 @@ These three agents represent different entry points into AI-assisted coding. You
 
 ### What it is
 
-Claude Code is Anthropic's terminal-based AI coding agent. Unlike a chatbot, it reads every
-file in your project folder, understands how scripts relate to each other, and can make
-changes across multiple files in a single conversation. You talk to it in plain English;
-it writes, edits, and explains the code.
+Claude Code is Anthropic's AI coding agent, built into the **Claude desktop app**. Unlike a chatbot, it reads every file in your project folder, understands how scripts relate to each other, and can make changes across multiple files in a single conversation. You talk to it in plain English; it writes, edits, and explains the code.
+
+**In this course we use Claude Code via the Claude desktop app** — open the app, select Claude Code mode, and point it at your project folder. No terminal needed to get started.
 
 ### Access requirements
 
@@ -41,43 +40,31 @@ Claude Code requires a **paid Anthropic plan** — the free Claude.ai account do
 
 > **For this course:** API keys and credits will be provided on the day.
 
-### Installation (2026)
+### Getting started (2026)
 
-Anthropic now provides **native installers** as the recommended approach — no Node.js required.
+**Recommended for this course — via the desktop app:**
 
-**Windows** — use WinGet:
+1. Download the Claude desktop app from [claude.ai/download](https://claude.ai/download) and install it
+2. Sign in with your Anthropic account (Pro or Max plan required for Claude Code)
+3. Open the app and select **Claude Code** from the mode switcher
+4. Point it at your project folder — it will read your files and CLAUDE.md automatically
+
+**For those who prefer the terminal — CLI method (also fully supported):**
+
+*Windows* — PowerShell:
+```powershell
+irm https://claude.ai/install.ps1 | iex
 ```
-winget install Anthropic.ClaudeCode
-```
-Or download the native installer from [claude.ai/download](https://claude.ai/download).
+Then run `claude` in PowerShell, CMD, or Git Bash from your project folder.
 
-**macOS**
+*macOS*
 ```bash
 brew install claude-code
 ```
 
-**Linux (Debian/Ubuntu)**
-```bash
-sudo apt install claude-code
-```
-
-**Legacy method (npm — still works)**
+*Legacy npm method (still works)*
 ```bash
 npm install -g @anthropic-ai/claude-code
-```
-
-### First run
-
-Open a terminal in your project folder and type:
-```bash
-claude
-```
-
-You'll be prompted to authenticate. After that, Claude Code reads your project and is ready.
-
-Run diagnostics at any time with:
-```bash
-claude doctor
 ```
 
 ### The CLAUDE.md file
@@ -89,8 +76,7 @@ file in your project folder that tells the agent:
 - What to improve and what not to touch
 - Ready-to-run improvement tasks it can carry out
 
-The course repository already contains a `CLAUDE.md`. When you run `claude` inside the
-project folder, it absorbs this briefing automatically before doing anything.
+The course repository already contains a `CLAUDE.md`. When you open Claude Code (desktop app or CLI) inside the project folder, it absorbs this briefing automatically before doing anything.
 
 ### What you can ask Claude Code to do
 
@@ -155,9 +141,9 @@ Do not change any of the logic — only the comments.
 
 ### What it is
 
-OpenAI Codex is OpenAI's terminal coding agent, powered by **GPT-5.2-Codex** — a model
-specifically optimised for agentic coding tasks. It is lightweight, fast, and excellent
-for quick script generation and exploration.
+OpenAI Codex is OpenAI's AI coding agent, powered by **GPT-5.3-Codex** — a model specifically optimised for agentic coding tasks. It is lightweight, fast, and excellent for quick script generation and exploration.
+
+**In this course we use Codex via the web app at [chatgpt.com/codex](https://chatgpt.com/codex)** — log in with your ChatGPT account, describe your task, and Codex writes and runs code in a cloud sandbox. No installation required.
 
 ### Access requirements
 
@@ -198,7 +184,7 @@ Sign in with your ChatGPT account or enter an API key. Codex reads your current 
 |--|-------------|--------------|
 | Best for | Methodical, project-wide work; follows CLAUDE.md | Fast generation; quick exploration |
 | Project awareness | Deep — reads all files and CLAUDE.md | Good — reads the current folder |
-| Model | Claude Sonnet / Opus | GPT-5.2-Codex |
+| Model | Claude Sonnet / Opus | GPT-5.3-Codex |
 | Auth | Anthropic account or API key | ChatGPT account or OpenAI API key |
 
 ### Example prompts for Codex
@@ -243,10 +229,10 @@ a live demonstration of what's possible.
 
 | | Cowork | Claude Code |
 |--|--------|-------------|
-| Needs a terminal | No | Yes |
+| Needs a terminal | No | No (desktop app) — optional via CLI |
 | Can create Office files | Yes | No (code only) |
 | Best for | Task automation, document creation | Code-heavy development |
-| Entry level | Lower | Requires terminal comfort |
+| Entry level | Lower | Low via desktop app; higher via CLI |
 
 ### Access
 
@@ -331,11 +317,18 @@ git pull                                # Get latest changes
 ## Common terminal commands
 
 ```bash
-# ── CLAUDE CODE ──────────────────────────────────────
+# ── CLAUDE CODE (desktop app — recommended) ───────────
+# Open the Claude desktop app → select Claude Code mode
+# → point it at your project folder
+
+# ── CLAUDE CODE (CLI — optional) ─────────────────────
 claude                    # Start Claude Code in current folder
 claude doctor             # Run diagnostics
 
-# ── OPENAI CODEX ─────────────────────────────────────
+# ── OPENAI CODEX (web app — recommended) ──────────────
+# Open chatgpt.com/codex in your browser → log in → describe your task
+
+# ── OPENAI CODEX (CLI — optional) ────────────────────
 codex                     # Start Codex in current folder
 
 # ── PYTHON ───────────────────────────────────────────
@@ -350,6 +343,14 @@ git status
 git add filename.py
 git commit -m "docs: improve comments"
 git push
+git log --oneline
+```
+
+---
+
+*This guide was produced for the MRS Advanced AI Course.*  
+*Information verified May 2026 against official Anthropic, OpenAI, and GitHub documentation.*  
+*Tutor: Karolyn Webb | Repository: https://github.com/KarolynW/Code-for-MRS*
 git log --oneline
 ```
 
