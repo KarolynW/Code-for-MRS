@@ -10,7 +10,7 @@ A companion guide for the MRS Advanced AI Course
 | Tool | Made by | What it does | How we use it in the session |
 |------|---------|-------------|------------------------------|
 | **Claude Code** | Anthropic | An AI coding agent built into the Claude desktop app — reads your project files and writes, improves, and explains code through conversation | Building scripts, improving documentation, running the Tasks in CLAUDE.md |
-| **OpenAI Codex** | OpenAI | An AI coding agent available at chatgpt.com/codex — fast and great for quick generation, runs in a cloud sandbox | Generating scripts, exploring alternatives, comparing with Claude Code output |
+| **OpenAI Codex** | OpenAI | An AI coding agent available as a **Windows desktop app** (Microsoft Store) and macOS app — fast and great for quick generation | Generating scripts, exploring alternatives, comparing with Claude Code output |
 | **Cowork** | Anthropic | Claude's desktop mode — automates file and task management through conversation, no terminal needed | Demonstrated live: how the course materials themselves were built |
 
 These three agents represent different entry points into AI-assisted coding. You don't need all three — pick the one that fits how you work.
@@ -143,40 +143,37 @@ Do not change any of the logic — only the comments.
 
 OpenAI Codex is OpenAI's AI coding agent, powered by **GPT-5.3-Codex** — a model specifically optimised for agentic coding tasks. It is lightweight, fast, and excellent for quick script generation and exploration.
 
-**In this course we use Codex via the web app at [chatgpt.com/codex](https://chatgpt.com/codex)** — log in with your ChatGPT account, describe your task, and Codex writes and runs code in a cloud sandbox. No installation required.
+**In this course we use the Codex Windows desktop app**, available from the Microsoft Store. Sign in with your ChatGPT account, open your project folder, and Codex writes and runs code in a sandboxed environment on your machine. Also available as a macOS app, CLI, and IDE extension.
 
 ### Access requirements
 
 | Mode | What you need |
 |---|---|
-| **ChatGPT account mode** | A Free, Go, Plus, or Pro ChatGPT account — usage draws from your plan's limits |
+| **ChatGPT account mode** | A Free, Plus, or Pro ChatGPT account — sign in to the desktop app or CLI with your ChatGPT login |
 | **API key mode** | An OpenAI API key — billed per token |
 
 > **For this course:** API keys will be provided. Free ChatGPT accounts also currently receive limited Codex access.
 
-### Installation
+### Getting started (2026)
 
-Codex requires **Node.js version 22 or later**.
+**Recommended for this course — Windows desktop app:**
 
-**macOS / Linux**
+1. Open the **Microsoft Store** on Windows and search for **Codex**
+2. Install the app and open it
+3. Sign in with your ChatGPT account (Plus, Pro, Business, Enterprise, or Edu plan)
+4. Point Codex at your project folder — it reads your files and is ready to go
+
+**Also available on macOS:**
+Download the macOS app from [openai.com/codex](https://openai.com/codex/).
+
+**CLI method (optional — for those who prefer the terminal):**
 ```bash
 npm install -g @openai/codex
-```
-
-**macOS (Homebrew)**
-```bash
-brew install --cask codex
-```
-
-**Windows** — WSL2 is recommended for the best experience. See [developers.openai.com/codex/windows](https://developers.openai.com/codex/windows).
-
-### First run
-
-```bash
 codex
 ```
+See full CLI docs at [developers.openai.com/codex/cli](https://developers.openai.com/codex/cli).
 
-Sign in with your ChatGPT account or enter an API key. Codex reads your current folder and you're ready.
+### First run
 
 ### How Codex differs from Claude Code
 
@@ -184,7 +181,7 @@ Sign in with your ChatGPT account or enter an API key. Codex reads your current 
 |--|-------------|--------------|
 | Best for | Methodical, project-wide work; follows CLAUDE.md | Fast generation; quick exploration |
 | Project awareness | Deep — reads all files and CLAUDE.md | Good — reads the current folder |
-| Model | Claude Sonnet / Opus | GPT-5.3-Codex |
+| Model | Claude Sonnet | GPT-5.3-Codex |
 | Auth | Anthropic account or API key | ChatGPT account or OpenAI API key |
 
 ### Example prompts for Codex
@@ -325,8 +322,8 @@ git pull                                # Get latest changes
 claude                    # Start Claude Code in current folder
 claude doctor             # Run diagnostics
 
-# ── OPENAI CODEX (web app — recommended) ──────────────
-# Open chatgpt.com/codex in your browser → log in → describe your task
+# ── OPENAI CODEX (desktop app — recommended) ──────────
+# Open the Codex Windows app (Microsoft Store) → sign in → open your project folder
 
 # ── OPENAI CODEX (CLI — optional) ────────────────────
 codex                     # Start Codex in current folder
@@ -343,14 +340,6 @@ git status
 git add filename.py
 git commit -m "docs: improve comments"
 git push
-git log --oneline
-```
-
----
-
-*This guide was produced for the MRS Advanced AI Course.*  
-*Information verified May 2026 against official Anthropic, OpenAI, and GitHub documentation.*  
-*Tutor: Karolyn Webb | Repository: https://github.com/KarolynW/Code-for-MRS*
 git log --oneline
 ```
 

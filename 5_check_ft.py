@@ -133,15 +133,16 @@ def load_jsonl(path: str) -> tuple:
     Example:
         >>> valid, errors = load_jsonl("5_fine_tuning.jsonl")
         >>> print(f"{valid} valid examples, {len(errors)} errors")
-        50 valid examples, 0 errors
+        73 valid examples, 0 errors
     """
 
     valid = 0
     errors = []
 
-    # ``io.open`` with ``encoding='utf-8'`` guarantees we read text correctly on
-    # every platform.  Each line in a JSONL file is a self-contained JSON object.
-    with io.open(path, "r", encoding="utf-8") as f:
+    # ``utf-8-sig`` automatically strips the UTF-8 BOM from the first line if
+    # one is present.  Using plain ``utf-8`` would leave the BOM character inside
+    # the first JSON string and cause a spurious parse error on line 1.
+    with io.open(path, "r", encoding="utf-8-sig") as f:
         for i, line in enumerate(f, 1):
             line = line.strip()
             if not line:

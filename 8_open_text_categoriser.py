@@ -111,7 +111,7 @@ Return ONLY valid JSON. Do not include any explanation or extra text."""
             raise ValueError("OPENAI_API_KEY not found in .env file")
         client = OpenAI(api_key=api_key)
         result = client.responses.create(
-            model="gpt-4o-mini",       # Cost-effective model for classification tasks
+            model="gpt-5.4-mini",      # Cost-effective model for classification tasks
             instructions=system_prompt,
             input=user_message,
         )

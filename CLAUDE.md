@@ -403,7 +403,7 @@ client = anthropic.Anthropic(api_key=api_key)
 
 response = client.messages.create(
     model="claude-haiku-4-5",             # Fast, cost-effective — good for classification
-    # model="claude-opus-4-7",           # More powerful — good for complex analysis
+    # model="claude-sonnet-4-6",          # More powerful — good for complex analysis
     max_tokens=1024,
     system="Your system prompt here.",
     messages=[
@@ -426,8 +426,8 @@ api_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=api_key)
 
 response = client.responses.create(
-    model="gpt-4.1-mini",           # Cost-effective — good for classification
-    # model="gpt-4.1",              # More powerful — good for complex analysis
+    model="gpt-5.4-mini",           # Cost-effective — good for classification
+    # model="gpt-5.4",              # More powerful — good for complex analysis
     instructions="Your system prompt here.",
     input="Your user message here.",
 )
