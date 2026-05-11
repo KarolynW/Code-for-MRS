@@ -150,7 +150,7 @@ client = anthropic.Anthropic(api_key=api_key)
 # We create a client using our API key, then call client.messages.create()
 #
 # Key parameters to know:
-#   model        — which version of Claude to use (Haiku is fast and cheap)
+#   model        — which version of Claude to use (Sonnet is fast and capable)
 #   max_tokens   — the maximum number of tokens in the response
 #   system       — the system prompt (your briefing to the AI)
 #   messages     — the conversation, starting with the user's message
@@ -162,8 +162,8 @@ client = anthropic.Anthropic(api_key=api_key)
 # -----------------------------------------------------------------------
 try:
     response = client.messages.create(
-        model="claude-haiku-4-5-20251001",  # Fast, cost-effective model — good for demos
-        # model="claude-sonnet-4-6",        # Uncomment for higher-quality analysis
+        model="claude-sonnet-4-6",          # Balanced quality and speed — good for analysis
+        # model="claude-haiku-4-5-20251001",  # Uncomment for a faster, cheaper alternative
         max_tokens=1024,                    # Cap the response at ~750 words
         system=system_prompt,              # The AI's role and instructions
         messages=[
