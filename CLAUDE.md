@@ -91,7 +91,7 @@ When you improve or extend any script, apply these documentation rules without e
    add a comment explaining what each parameter does. Example:
    ```python
    response = client.messages.create(
-       model="claude-haiku-4-5-20251001",   # The model to use — Haiku is fast and cheap
+       model="claude-haiku-4-5",             # The model to use — Haiku is fast and cheap
        max_tokens=256,                       # Maximum length of the response
        system=system_prompt,                 # The AI's briefing / role
        messages=[{"role": "user", "content": user_message}]  # The conversation history
@@ -402,8 +402,8 @@ api_key = os.getenv("ANTHROPIC_API_KEY")
 client = anthropic.Anthropic(api_key=api_key)
 
 response = client.messages.create(
-    model="claude-haiku-4-5-20251001",   # Fast, cost-effective — good for classification
-    # model="claude-opus-4-5",           # More powerful — good for complex analysis
+    model="claude-haiku-4-5",             # Fast, cost-effective — good for classification
+    # model="claude-opus-4-7",           # More powerful — good for complex analysis
     max_tokens=1024,
     system="Your system prompt here.",
     messages=[
@@ -426,8 +426,8 @@ api_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=api_key)
 
 response = client.responses.create(
-    model="gpt-4o-mini",            # Cost-effective — good for classification
-    # model="gpt-4o",               # More powerful — good for complex analysis
+    model="gpt-4.1-mini",           # Cost-effective — good for classification
+    # model="gpt-4.1",              # More powerful — good for complex analysis
     instructions="Your system prompt here.",
     input="Your user message here.",
 )
@@ -439,3 +439,4 @@ result_text = response.output_text
 
 *This file was created for the MRS Advanced AI Course.*
 *Tutor: Karolyn Webb | Repository: https://github.com/KarolynW/Code-for-MRS*
+
